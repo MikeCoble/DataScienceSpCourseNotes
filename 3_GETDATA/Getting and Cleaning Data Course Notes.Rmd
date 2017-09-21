@@ -16,8 +16,8 @@ output:
 $\pagebreak$
 
 ## Overview
-* finding and extracting raw data
-* today any how to make data tiny
+* finding and extracting raw data and getting it ready to analyze
+* how to make data tidy
 * Raw data $\rightarrow$ processing script $\rightarrow$ tidy data $\rightarrow$ data analysis $\rightarrow$ data communication
 
 
@@ -35,18 +35,18 @@ $\pagebreak$
 ## Tidy Data
 1. **Raw Data**
     * no software processing has been done
-    * did not manipulate, remove, or summarize in anyway
+    * did not manipulate, remove, or summarize in any way
 2. **Tidy data set**
     * end goal of cleaning data process
     * each variable should be in one column
     * each observation of that variable should be in a different row
     * one table for each kind of variable
 		* if there are multiple tables, there should be a column to link them
-    * include a row at the top of each file with variable names (variable names should make sense)
-    * in general data should be save in one file per table
+    * include variable names (that make sense)
+    * in general data should be saved in one file per table
 3. **Code book describing each variable and its values in the tidy data set**
     * information about the variables (w/ units) in dataset ***NOT*** contained in tidy data
-    * information about the summary choice that were made (median/mean)
+    * information about the summary choices that were made (e.g., median/mean)
     * information about experimental study design (data collection methods)
     * common format for this document = markdown/Word/text
 		* ***"study design"*** section = thorough description of how data was collected
@@ -62,7 +62,7 @@ $\pagebreak$
 * **Set working directory**
     * ***Relative***: `setwd("./data")`, `setwd("../")` = move up in directory
     * ***Absolute***: `setwd("/User/Name/data")`
-* **Check if file exists and download file**
+* **Check if directory exists and create**
     * `if(!file.exists("./data")) {dir.create("./data")}`
 * **Download file**
     * `download.file(url, destfile= "directory/filname.extension", method = "curl")`
@@ -641,11 +641,11 @@ $\pagebreak$
 * `grep("text", object, value = FALSE)` = searches through object to return the indices of where the text is found
     * `value = TRUE` = returns the values instead of the indices
     * ***Note**: `grep()` returns `integer(0)` if no value appears (length of the result = 0) *
-* `grepl("text", object)` = searches through object and returns the T/F logical vector for if the text has been found
+* `grepl("text", object)` = searches through object and returns a T/F logical vector for if the text has been found
     * *example*: `data2 <- data1![grepl("test", data$intersection), ]`
 * `string` package [`library(stringr)`]
     * `nchar(object/string)` = returns number of characters in each element of object/string, works on matrix/data frames as well
-    * `substr("text", 1, 7)` = returns a substring of the specified beginning and ending characters
+    * `substr("text", 1, 7)` = returns a substring of the specified beginning and ending positions
 		* ***Note**: R is uses 1 based indexing system, which means the first character of the string = 1 *
 		* ***Note**: substring returns a string that includes both first AND last letters and everything inbetween *
     * `paste("str1", "str2", sep = " ")` = combines two strings together into one by using the specified separator (`default = " "`)
@@ -658,10 +658,10 @@ $\pagebreak$
 		* unique
 		* contains no underscores/dots/space
     * variables with character values
-		* made into factor variables
+		* usually made into factor variables
 		* descriptive
-		* use TRUE/FALSE instead of 1/0
-		* use Male/Female instead of 1/0 or M/F
+			* use TRUE/FALSE instead of 1/0
+			* use Male/Female instead of 1/0 or M/F
 
 
 
@@ -683,7 +683,7 @@ $\pagebreak$
 * `.` = any character (metacharacter)
     * *example*: `9.11` matches 9/11, 9911, 9-11, etc
 * `|` = or, used to combine subexpressions called alternatives (metacharacter)
-    * *example*: `^([Gg}ood | [Bb]ad)` matches any lines that start with lower/upper "Good..." and "Bad ..."
+    * *example*: `^([Gg]ood | [Bb]ad)` matches any lines that start with lower/upper "Good" or "Bad"
     * ***Note**: `()` limits the scope of alternatives divided by "|" here *
 * `?` = expression is optional = 0/1 of some character/expression (metacharacter)
     * *example*: `[Gg]eorge( [Ww]\.)?` [Bb]ush matches "george bush", "George W. Bush"
@@ -692,15 +692,15 @@ $\pagebreak$
     * *example*: `.*` matches anything combination of characters
     * ***Note**: `*` is greedy = always matches the longest possible string that satisfies the regular expression *
 		* greediness of `*` can be turned off with the `?`
-		* *example*: `s.*?s` matches the shortest "s...s" text
+			* *example*: `s.*?s` matches the shortest "s...s" text
 * `+` = 1 or more repetitions = 1 or more of some character/expression (metacharacter)
-    * *example*: `[0-9]+` matches matches many at least digit 1 numbers such as "0", "90", or "021442132"
+    * *example*: `[0-9]+` matches many at least 1 digit numbers such as "0", "90", or "021442132"
 * `{m, n}` = interval quantifier, allows specifying the minimum and maximum number of matches (metacharacter)
     * `m` = at least, `n` = not more than
     * `{m}` = exactly `m` matches
     * `{m, }` = at least m matches
-    * *example*: `Bush( +[^ ]+ +){1, 5}` debates matches "Bush + (at least one space + any word that doesn’t contain space + at least one space) this pattern repeated between 1 and 5 times + debates"
-* `()` = define group as the the text in parentheses, groups will be remembered and can be referred to by `\1`, `\2`, etc.
+    * *example*: `Bush( +[^ ]+ +){1, 5} debates` matches "Bush + (at least one space + any word that doesn’t contain space + at least one space) this pattern repeated between 1 and 5 times + debates"
+* `()` = define group as the matched text in parentheses, groups will be remembered and can be referred to by `\1`, `\2`, etc.
     * *example*: `([a-zA-Z]+) +\1 +` matches "any word + at least one space + the same word repeated + at least one space" = "night night", "so so", etc.
 
 
@@ -715,7 +715,7 @@ $\pagebreak$
 		* `%d` = day as number (0-31)
 		* `%a` = abbreviated weekday
 		* `%A` = unabbreviated weekday
-		* `%m` = month (00-12
+		* `%m` = month (00-12)
 		* `%b` = abbreviated month
 		* `%B` = unabbreviated month
 		* `%y` = 2 digit year
@@ -723,7 +723,7 @@ $\pagebreak$
     * *example*: `format(Sys.Date(), "%a %b %d")` = returns "Sun Jan 18"
 * `as.Date("character", "format")` = converts character vector/variable into Date format by using the codes above
     * *example*: `z <- as.Date("1jan1960", "%d%b%Y")` = creates a Date of "1960-01-01"
-* `Date1 - Date2` = prints the difference between the dates in this format "Time difference of n days"
+* `Date1 - Date2` = prints the difference between the dates in this format: "Time difference of n days"
     * `as.numeric()` on this result will print/store n, the numeric difference
 * `weekdays(Date)`, `months(Date)` = returns the weekday/month of the given Date object
 * `julian(Date)` = converts the Date, which is the number of days since the origin
