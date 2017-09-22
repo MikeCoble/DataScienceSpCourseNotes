@@ -554,7 +554,7 @@ $\pagebreak$
 		* `cut2(variable, g=4)` = automatically divides the variable values into 4 groups according the quantiles
 		* ***Note**: class of resultant variable = factor *
 * **factor variables**
-    * `restData$zcf <- factor(restData$zipCode)` = coverts an existing vector to factor variable
+    * `restData$zcf <- factor(restData$zipCode)` = converts an existing vector to factor variable
 		* `levels = c("yes", "no")` = use the levels argument to specify the order of the different factors
 		* ***Note**: by default, converting variables to the factor class, the levels will be structured alphabetically unless otherwise specified *
     * `as.numeric(factorVariable)` = converts factor variable values into numeric by assigning the lowest (first) level 1, the second lowest level 2, ..., etc.
